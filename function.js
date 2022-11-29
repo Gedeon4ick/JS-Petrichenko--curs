@@ -18,14 +18,40 @@ console.log(calc(1, 5));
 
 // Конвертор денег
 
-const  usdCurr = 28;
+// const  usdCurr = 28;
+// const  eurCurr = 32;
+
+// function convert(amount, curr) {
+//     console.log(curr * amount);
+// }
+
+// convert(500, usdCurr);
+// convert(500, eurCurr);
+
+// retern
+
 const  eurCurr = 32;
+const disccount = 0.9;
 
 function convert(amount, curr) {
-    console.log(curr * amount);
+    return curr * amount;
+}
+function promotion(result) {
+    console.log(result * disccount);
 }
 
-convert(500, usdCurr);
-convert(500, eurCurr);
+const res = convert(500, eurCurr)
+promotion(res);
+
+// Решние задач
+
+// 1 exercise 
+function sayHello(name = 'Антон') {
+    return "Привет " + name ;
+}
+
+// 2 exercise 
+
+
 
 
