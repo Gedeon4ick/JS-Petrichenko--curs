@@ -52,6 +52,11 @@ function sayHello(name = 'Антон') {
 
 // 2 exercise 
 
+function returnNeighboringNumbers(i = 6) {
+    return [i - 1, i, i + 1];
+}
+
+console.log(returnNeighboringNumbers());
 
 
 
