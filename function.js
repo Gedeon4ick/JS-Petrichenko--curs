@@ -50,13 +50,6 @@ function sayHello(name = 'Антон') {
     return "Привет " + name ;
 }
 
-// 2 exercise 
-
-function returnNeighboringNumbers(i = 6) {
-    return [i - 1, i, i + 1];
-}
-
-console.log(returnNeighboringNumbers());
 
 
 // 3 exercise 
@@ -83,3 +76,8 @@ function getMathResult(num, times) {
 }
 
 getMathResult(10, 5);
+
+
+// ex 7
+
+
