@@ -1,7 +1,12 @@
 "use strict";
 
-const arr = [1, 2, 3, 6, 8];
+const arr = [1, 22, 3, 6, 8];
 
+arr.sort(compareNum);
+console.log(arr);
+function compareNum(a, b) {
+     return a-b;
+ }
 // Методы работы с массивами 
 // arr.pop(); // удаление последнего элемента
 // arr.push(10); // добавляет в конец массива элемент
@@ -17,6 +22,12 @@ const arr = [1, 2, 3, 6, 8];
 
 // Метод fofEach()
 
-arr.forEach(function (item, i, arr) {
-     console.log(`${i}: ${item} внутри массива ${arr}`);
-});
+// arr.forEach(function (item, i, arr) {
+//      console.log(`${i}: ${item} внутри массива ${arr}`);
+// });
+
+
+// const str = prompt("", "");
+// const products = str.split(", ");
+   
+// console.log(products.join('; '));
