@@ -11,3 +11,27 @@ function reverse(params) {
 
 console.log(reverse(someString));
 
+// ex12.2
+
+const baseCurrencies = ['USD', 'EUR'];
+const additionalCurrencies = ['UAH', 'RUB', 'CNY'];
+
+const allCurrencies = [...baseCurrencies, ...additionalCurrencies];
+console.log(allCurrencies);
+
+function availableCurr(arr, missingCurr) {
+    if (arr.length === 0 ) {
+        return 'Нет доступных валют!';
+    } else {
+        let del = arr.splice(arr.indexOf(missingCurr), 1);
+        console.log(arr);
+        let str = 'Доступные валюты:\n';
+        arr.forEach(element => {
+            str += element + '\n';
+        });
+        return str;
+    }
+
+}
+
+console.log(availableCurr(allCurrencies, 'RUB'));
