@@ -10,8 +10,18 @@ const personalPlanPeter = {
             php: '10%'
         },
         exp: '1 month'
+    },
+    showAgeAndLangs: function (personalPlanPeter) {
+        let objCopy = {};
+        let key;
+        for (key in personalPlanPeter) {
+            objCopy[key] = personalPlanPeter[key];
+        }
+        return `Мне ${objCopy.age} и я владею языками: ${objCopy.skills.languages.join(' ').toUpperCase()}`;
     }
 };
+
+console.log(personalPlanPeter.showAgeAndLangs(personalPlanPeter));
 
 
 function showExperience(plan) {
@@ -22,7 +32,7 @@ function showExperience(plan) {
         objCopy[key] = plan[key];
     }
 
-    return objCopy.skills.exp;  
+    return objCopy.skills.exp;
 }
 
 console.log(showExperience(personalPlanPeter));
@@ -30,16 +40,17 @@ console.log(showExperience(personalPlanPeter));
 // ex10.2
 
 function showProgrammingLangs(plan) {
-    let langs = {};
-
-    let key;
-    for (key in plan) {
-        langs[key] = plan[key];
+    let str = '';
+    const {programmingLangs} = plan.skills;
+    
+    for (let key in programmingLangs) {
+        str += `Язык ${key} изучен на ${programmingLangs[key]}\n`;
     }
 
-    return `Язык JS изучен на ${langs.skills.programmingLangs.js} Язык php изучен на ${langs.skills.programmingLangs.php}`;
+    return str;
 }
 
 console.log(showProgrammingLangs(personalPlanPeter));
 
-// ex10.3
+// ex10.3 в верху добавил к орбьекту
+
