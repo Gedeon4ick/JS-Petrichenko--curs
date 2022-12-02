@@ -23,8 +23,10 @@ function availableCurr(arr, missingCurr) {
     if (arr.length === 0 ) {
         return 'Нет доступных валют!';
     } else {
-        let del = arr.splice(arr.indexOf(missingCurr), 1);
-        console.log(arr);
+        if (arr.indexOf(missingCurr) >= 0) {
+            let del = arr.splice(arr.indexOf(missingCurr), 1);
+        }
+
         let str = 'Доступные валюты:\n';
         arr.forEach(element => {
             str += element + '\n';
@@ -34,4 +36,4 @@ function availableCurr(arr, missingCurr) {
 
 }
 
-console.log(availableCurr(allCurrencies, 'RUB'));
+console.log(availableCurr(allCurrencies, 'UAH'));
