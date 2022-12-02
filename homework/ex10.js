@@ -29,3 +29,17 @@ console.log(showExperience(personalPlanPeter));
 
 // ex10.2
 
+function showProgrammingLangs(plan) {
+    let langs = {};
+
+    let key;
+    for (key in plan) {
+        langs[key] = plan[key];
+    }
+
+    return `Язык JS изучен на ${langs.skills.programmingLangs.js} Язык php изучен на ${langs.skills.programmingLangs.php}`;
+}
+
+console.log(showProgrammingLangs(personalPlanPeter));
+
+// ex10.3
