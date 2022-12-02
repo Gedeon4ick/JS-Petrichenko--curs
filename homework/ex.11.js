@@ -13,3 +13,15 @@ function showFamily(params) {
 }
 
 console.log(showFamily(family));
+
+// ex.11.2
+
+const favoriteCities = ['liSBon', 'ROME', 'miLan', 'Dublin'];
+
+function standardizeStrings(arr) {
+    arr.forEach(element => {
+        console.log(element.toLowerCase());
+    });
+}
+
+console.log(standardizeStrings(favoriteCities));
