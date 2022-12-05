@@ -44,7 +44,9 @@ wrapper.append(div);
 // hearts[0].replaceWith(circle[0]);
 
 // добавление HTML структуры настраницу
-// div.innerHTML = 'Hello World';
+div.innerHTML = '<h1>Hello World</h1>';
 
 // добавление текста в наш блок
-div.textContent = "Hello";
+// div.textContent = "Hello";
+
+div.insertAdjacentHTML('beforebegin', '<h2>Hello</h2>');
