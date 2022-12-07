@@ -38,7 +38,7 @@ pow(2, 3) // 8
 pow(2, 4) // 16
 
 
-// Практическое задание 
+// Практическое задание Задача: посчитать значение общего progress
 let students = {
     js: [{
         name: 'John',
@@ -63,3 +63,15 @@ let students = {
         }]
     }
 };
+
+// Для решения либо цикл либо рекурсия
+
+function getTotalProgressByIteration(data) {
+    let total = 0;
+    let students = 0;
+
+
+    return total / students;
+}
+
+console.log(getTotalProgressByIteration);
