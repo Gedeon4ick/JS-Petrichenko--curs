@@ -14,47 +14,79 @@
 
 'use strict';
 
-const movieDB = {
-    movies: [
-        "Логан",
-        "Лига справедливости",
-        "Ла-ла лэнд",
-        "Одержимость",
-        "Скотт Пилигрим против..."
-    ]
-};
+document.addEventListener('DOMContentLoaded', () => {
+
+    const movieDB = {
+        movies: [
+            "Логан",
+            "Лига справедливости",
+            "Ла-ла лэнд",
+            "Одержимость",
+            "Скотт Пилигрим против..."
+        ]
+    };
 
 
-// 1)
-const reclam = document.querySelectorAll('.promo__adv img');
-const poster = document.querySelector('.promo__bg');
-const genre = poster.querySelector('.promo__genre');
-const movilist = document.querySelector('.promo__interactive-list');
-reclam.forEach(item => {
-    item.remove();
-});
+    // 1)
+    const reclam = document.querySelectorAll('.promo__adv img');
+    const poster = document.querySelector('.promo__bg');
+    const genre = poster.querySelector('.promo__genre');
+    const movilist = document.querySelector('.promo__interactive-list');
+    const addForm = document.querySelector('form.add');
+    const addInput = addForm.querySelector('.adding__input');
+    const checkbox = addForm.querySelector('[type="checkbox"]');
 
-// 2) Изменить жанр фильма, поменять "комедия" на "драма"
+    addForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-genre.textContent = 'драма';
+        const newFilm = addInput.value;
+        const favorite = checkbox.checked;
 
-// 3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
-// Реализовать только при помощи JS
+        movieDB.movies.push(newFilm);
+        sortArr(movieDB.movies);
 
-poster.style.backgroundImage = 'url("img/bg.jpg")';
+        createMovieList(movieDB.movies, movilist);
+        event.target.reset(); 
+    });
 
-// 4) Список фильмов на странице сформировать на основании данных из этого JS файла.
-// Отсортировать их по алфавиту 
+    const deleteAdv = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
 
-movilist.innerHTML = "";
+    // 2) Изменить жанр фильма, поменять "комедия" на "драма"
+    const makeChanges = () => {
+        genre.textContent = 'драма';
+        poster.style.backgroundImage = 'url("img/bg.jpg")';
 
-movieDB.movies.sort();
+    };
 
+    // 3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
+    // Реализовать только при помощи JS
 
-movieDB.movies.forEach((film, i) => {
-    movilist.innerHTML += `
-        <li class="promo__interactive-item">${i + 1} ${film}
-            <div class="delete"></div>
-        </li>
-    `;
+    // 4) Список фильмов на странице сформировать на основании данных из этого JS файла.
+    // Отсортировать их по алфавиту 
+
+    const sortArr = (arr) => {
+        arr.sort();
+    };
+
+    function createMovieList(films, parent) {
+        parent.innerHTML = "";
+
+        films.forEach((film, i) => {
+            parent.innerHTML += `
+                <li class="promo__interactive-item">${i + 1} ${film}
+                    <div class="delete"></div>
+                </li>
+            `;
+        });
+
+    }
+
+    deleteAdv(reclam);
+    makeChanges();
+    sortArr(movieDB.movies);
+    createMovieList(movieDB.movies, movilist);
 });
