@@ -39,13 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
     addForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const newFilm = addInput.value;
+        let newFilm = addInput.value;
         const favorite = checkbox.checked;
+        if (newFilm) {
 
-        movieDB.movies.push(newFilm);
-        sortArr(movieDB.movies);
+            if (newFilm.length > 21) {
+                newFilm = `${newFilm.substring(0, 22)}...`;
+            }
 
-        createMovieList(movieDB.movies, movilist);
+            if (favorite) {
+                console.log("Добавляем любимый фильм");
+            }
+            movieDB.movies.push(newFilm);
+            sortArr(movieDB.movies);
+    
+            createMovieList(movieDB.movies, movilist);
+        }
+
+        
+
         event.target.reset(); 
     });
 
@@ -74,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createMovieList(films, parent) {
         parent.innerHTML = "";
+        sortArr(films);
 
         films.forEach((film, i) => {
             parent.innerHTML += `
@@ -83,10 +96,17 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
 
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.remove();
+                movieDB.movies.splice(i, 1);
+                createMovieList(films, parent);
+            });
+        });
+
     }
 
     deleteAdv(reclam);
     makeChanges();
-    sortArr(movieDB.movies);
     createMovieList(movieDB.movies, movilist);
 });
