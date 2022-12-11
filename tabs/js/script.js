@@ -38,63 +38,65 @@ window.addEventListener('DOMContentLoaded', () => {
                     showTabContent(i);
                 }
             });
-        } 
+        }
     });
 
     // Timer
     // Переменная определяющая дедлайн
-    const deadLine = '2022-15-11';
+    const deadLine = '2023-01-11';
 
     // разница между дедлайном и нашем текущем временем
-        function getTimeRemaining(endtime) {
-            // в переменную t получем разницу в колличестве миллисекунд
-            const t = Date.parse(endtime) - Date.parse(new Date());
-            // Разницу в миллисекундах воращаем обратгно в числовой формат для получения кол-ва дней
-            const days = Math.floor(t / (1000 * 60 * 60 *24));
-            // получение общего кол-ва часов
-            const hours = Math.floor((t / (1000* 60 * 60)) % 24);
-            //получение минут
-            const minuts = Math.floor((t / 1000 / 60) % 60);
-            // получение секунд
-            const second = Math.floor((t / 1000) % 60);
-            // возращаем полученные значения в виде обьекта
-            return {
-                'total': t,
-                'days': days,
-                'hours:': hours,
-                'minuts': minuts,
-                'second': second
-            };
-        }
-
-        // Фун-ция которая будет устанавливать наш таймер на страничку
-
-        function setClock(selector, endtime) {
-            const timer = document.querySelector('selector');
-            const days = timer.querySelector('#days');
-            const hours = timer.querySelector('#hours');
-            const minuts = timer.querySelector('#minuts');
-            const second = timer.querySelector('#second');
-            // интервал запуска функции
-            const timeInterval = setInterval(updateClock, 1000); 
+    function getTimeRemaining(endtime) {
+        // в переменную t получем разницу в колличестве миллисекунд
+        const t = Date.parse(endtime) - Date.parse(new Date());
+        // Разницу в миллисекундах воращаем обратно в числовой формат для получения кол-ва дней
+        const days = Math.floor(t / (1000 * 60 * 60 * 24));
+        // получение общего кол-ва часов
+        const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        //получение минут
+        const minutes = Math.floor((t / 1000 / 60) % 60);
+        // получение секунд
+        const seconds = Math.floor((t / 1000) % 60);
+        // возращаем полученные значения в виде обьекта
+        return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
 
 
-            // Функция которая будет обновлять наш таймер каждую секунду
-            function updateClock() {
-                // Расчет того времени который у нас остался прямо на эту секунду
-                const t = getTimeRemaining(endtime);
-                // Расчетные велечины поместить на страницу
-                days.innerHTML = t.days;
-                hours.innerHTML = t.hours;
-                minuts.innerHTML = t.minuts;
-                second.innerHTML = t.second;
-                // остановка таймера 
-                if (t.total <= 0) {
-                    clearInterval(timeInterval);
-                }
+
+    // Фун-ция которая будет устанавливать наш таймер на страничку
+
+    function setClock(selector, endtime) {
+        const timer = document.querySelector(selector);
+        const days = timer.querySelector('#days');
+        const hours = timer.querySelector('#hours');
+        const minutes = timer.querySelector('#minutes');
+        const seconds = timer.querySelector('#seconds');
+        // интервал запуска функции
+        const timeInterval = setInterval(updateClock, 1000);
+
+
+        // Функция которая будет обновлять наш таймер каждую секунду
+        function updateClock() {
+            // Расчет того времени который у нас остался прямо на эту секунду
+            const t = getTimeRemaining(endtime);
+            // Расчетные велечины поместить на страницу
+            days.innerHTML = t.days;
+            hours.innerHTML = t.hours;
+            minutes.innerHTML = t.minutes;
+            seconds.innerHTML = t.seconds;
+            // остановка таймера 
+            if (t.total <= 0) {
+                clearInterval(timeInterval);
             }
-
         }
 
-        setClock('.timer', deadLine);
+    }
+    setClock('.timer', deadLine);
+
 });
