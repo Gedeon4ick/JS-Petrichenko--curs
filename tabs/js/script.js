@@ -67,10 +67,17 @@ window.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // функция для подставления 0 перед 1 значным числом
+    function getZero(num) {
+        if (num >= 0 && num < 10) {
+            return `0${num}`
+        } else {
+            return num;
+        }
+    }
 
 
     // Фун-ция которая будет устанавливать наш таймер на страничку
-
     function setClock(selector, endtime) {
         const timer = document.querySelector(selector);
         const days = timer.querySelector('#days');
@@ -79,24 +86,26 @@ window.addEventListener('DOMContentLoaded', () => {
         const seconds = timer.querySelector('#seconds');
         // интервал запуска функции
         const timeInterval = setInterval(updateClock, 1000);
-
-
         // Функция которая будет обновлять наш таймер каждую секунду
+        
+        // фикс мигания верстки при обновлении или заупскии страницы
+        //необходимо вызвать функциию в начале
+        // функция инициализации один раз запуститься исчезнет, далее будет работать setInterval
+        updateClock();
+        
         function updateClock() {
             // Расчет того времени который у нас остался прямо на эту секунду
             const t = getTimeRemaining(endtime);
             // Расчетные велечины поместить на страницу
-            days.innerHTML = t.days;
-            hours.innerHTML = t.hours;
-            minutes.innerHTML = t.minutes;
-            seconds.innerHTML = t.seconds;
+            days.innerHTML = getZero(t.days);
+            hours.innerHTML = getZero(t.hours);
+            minutes.innerHTML = getZero(t.minutes);
+            seconds.innerHTML = getZero(t.seconds);
             // остановка таймера 
             if (t.total <= 0) {
                 clearInterval(timeInterval);
             }
         }
-
     }
     setClock('.timer', deadLine);
-
 });
