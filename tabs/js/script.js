@@ -119,4 +119,26 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
     setClock('.timer', deadLine);
+
+    // Modal
+
+    // определим переменные
+    
+    const modalTrigger = document.querySelector('[data-modal]');
+    // само модальное окно
+    const modal = document.querySelector('.modal');
+    // переменная закрытия
+    const modalCloseBtn = document.querySelector('[data-close]');
+    // Нам понадобиться 2 функции, открытие и закрытие
+    //Обработчики события необходимо назначить на несколько тригеров
+
+    modalTrigger.addEventListener('click', () => {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+    });
+
+    modalCloseBtn.addEventListener('click', () => {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+    });
 });
