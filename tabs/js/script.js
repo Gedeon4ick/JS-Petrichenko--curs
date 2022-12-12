@@ -123,22 +123,53 @@ window.addEventListener('DOMContentLoaded', () => {
     // Modal
 
     // определим переменные
-    
-    const modalTrigger = document.querySelector('[data-modal]');
+
+    const modalTrigger = document.querySelectorAll('[data-modal]');
     // само модальное окно
     const modal = document.querySelector('.modal');
     // переменная закрытия
     const modalCloseBtn = document.querySelector('[data-close]');
-    // Нам понадобиться 2 функции, открытие и закрытие
-    //Обработчики события необходимо назначить на несколько тригеров
+    // Получили псевдомассив триггеров, и чтбы повесить на каждый из ник обработчик события необходимо перебрать каждый элемент псевдомассива
+    modalTrigger.forEach(btn => {
+        // Нам понадобиться 2 функции, открытие и закрытие
+        //Обработчики события необходимо назначить на несколько тригеров
 
-    modalTrigger.addEventListener('click', () => {
-        modal.classList.add('show');
-        modal.classList.remove('hide');
+        btn.addEventListener('click', () => {
+            // modal.classList.add('show');
+            // modal.classList.remove('hide');
+
+            //открытие модального окна через toggle
+            modal.classList.toggle('show');
+            // отключение скрола при открыти модального окна
+            document.body.style.overflow = 'hidden';
+        });
     });
 
-    modalCloseBtn.addEventListener('click', () => {
-        modal.classList.add('hide');
-        modal.classList.remove('show');
+    function closeModal() {
+         // modal.classList.add('hide');
+        // modal.classList.remove('show');
+        // Закрытие модального окна через toggle
+        modal.classList.toggle('show');
+
+        // восстанавливаем скрол после закрытия модального окна
+        document.body.style.overflow = '';
+    }
+    // closeModal не вызываем а просто передаем!
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // закрытие модального окна при клике на overflow
+    modal.addEventListener('click', (e) => {
+        // грубо говоря если клик будет по обьекту модал то закроем модалььное окно
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // закрытие модального окна при нажатии на кнопки при помощи события keydown
+    document.addEventListener('keydown', (e) => {
+        // второе условие уточняет открыто ли в данный момент модальное окно, и будет запускать функцию закрытия только при условии что оно открыто
+        if (e.code === 'Escape' && modalCloseBtn.classList.contains('show')) {
+            closeModal();
+        }
     });
 });
