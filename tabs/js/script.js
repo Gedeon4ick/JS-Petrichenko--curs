@@ -129,8 +129,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('.modal');
     // переменная закрытия
     const modalCloseBtn = document.querySelector('[data-close]');
-    
-    
+
+
     function openModal() {
         // modal.classList.add('show');
         // modal.classList.remove('hide');
@@ -142,7 +142,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // если клиент открыл модальное окно сам то мы очищаем интерва
         clearInterval(modalTimerId);
     }
-    
+
     // Получили псевдомассив триггеров, и чтбы повесить на каждый из ник обработчик события необходимо перебрать каждый элемент псевдомассива
     modalTrigger.forEach(btn => {
         // Нам понадобиться 2 функции, открытие и закрытие
@@ -185,7 +185,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // функция показа модального окна во время скрола
     function showModalByScroll() {
-        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
             openModal();
             // удаление повторного показа модального окна 
             window.removeEventListener('scroll', showModalByScroll);
@@ -195,4 +195,84 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // если пользователь долистал страницу до конца то вылазиет модальное окно
     window.addEventListener('scroll', showModalByScroll);
+
+
+    // используем классы для карточек
+
+    // 1) создаем шаблон , для того чтобы потом от него отпачковывать карты
+
+    class MenuCard {
+        //сво-ва которые нам нужны для создания карточек
+        constructor(src, alt, title, descr, price, parentSelector, ...classes) {
+            this.src = src;
+            this.alt = alt;
+            this.title = title;
+            this.descr = descr;
+            this.price = price;
+            this.classes = classes;
+            this.parent = document.querySelector(parentSelector);
+            this.transfer = 27;
+            this.chanheToUAH();
+        }
+
+        // методы
+        // метод конвертации валют
+        chanheToUAH() {
+            this.price = this.price * this.transfer;
+        }
+        // метод создания верстки
+        render() {
+            // то что будем вставлять
+            const element = document.createElement('div');
+            // перебираем новые классы
+            if (this.classes.length === 0) {
+                this.element = 'menu__item';
+                element.classList.add(this.element);
+            } else {
+                this.classes.forEach(className => element.classList.add(className));
+            }
+
+            element.innerHTML = `
+                <img src=${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
+            `;
+            // помещение элемента на страницу
+            this.parent.append(element);
+
+        }   
+    }
+
+    // создаем нвоый обьект
+    new MenuCard(
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        9,
+        '.menu__field .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        17,
+        '.menu__field .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ',
+        19,
+        '.menu__field .container'
+    ).render();
 });
