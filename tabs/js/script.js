@@ -129,24 +129,31 @@ window.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('.modal');
     // переменная закрытия
     const modalCloseBtn = document.querySelector('[data-close]');
+    
+    
+    function openModal() {
+        // modal.classList.add('show');
+        // modal.classList.remove('hide');
+
+        //открытие модального окна через toggle
+        modal.classList.toggle('show');
+        // отключение скрола при открыти модального окна
+        document.body.style.overflow = 'hidden';
+        // если клиент открыл модальное окно сам то мы очищаем интерва
+        clearInterval(modalTimerId);
+    }
+    
     // Получили псевдомассив триггеров, и чтбы повесить на каждый из ник обработчик события необходимо перебрать каждый элемент псевдомассива
     modalTrigger.forEach(btn => {
         // Нам понадобиться 2 функции, открытие и закрытие
         //Обработчики события необходимо назначить на несколько тригеров
 
-        btn.addEventListener('click', () => {
-            // modal.classList.add('show');
-            // modal.classList.remove('hide');
-
-            //открытие модального окна через toggle
-            modal.classList.toggle('show');
-            // отключение скрола при открыти модального окна
-            document.body.style.overflow = 'hidden';
-        });
+        btn.addEventListener('click', openModal);
     });
 
+
     function closeModal() {
-         // modal.classList.add('hide');
+        // modal.classList.add('hide');
         // modal.classList.remove('show');
         // Закрытие модального окна через toggle
         modal.classList.toggle('show');
@@ -172,4 +179,20 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    // запуск модального окна по истечении времени
+    const modalTimerId = setTimeout(openModal, 5000);
+
+    // функция показа модального окна во время скрола
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
+            openModal();
+            // удаление повторного показа модального окна 
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+
+    // если пользователь долистал страницу до конца то вылазиет модальное окно
+    window.addEventListener('scroll', showModalByScroll);
 });
