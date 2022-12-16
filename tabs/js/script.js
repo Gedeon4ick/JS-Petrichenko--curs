@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // убираем класс активности у заголовка
         tabs.forEach(item => {
             item.classList.remove('tabheader__item_active');
-        })
+        });
     }
 
     // Функция которая будет показывать нам табы
@@ -128,15 +128,15 @@ window.addEventListener('DOMContentLoaded', () => {
     // само модальное окно
     const modal = document.querySelector('.modal');
     // переменная закрытия
-    const modalCloseBtn = document.querySelector('[data-close]');
+    // const modalCloseBtn = document.querySelector('[data-close]');
 
 
     function openModal() {
-        // modal.classList.add('show');
-        // modal.classList.remove('hide');
+        modal.classList.add('show');
+        modal.classList.remove('hide');
 
         //открытие модального окна через toggle
-        modal.classList.toggle('show');
+        // modal.classList.toggle('show');
         // отключение скрола при открыти модального окна
         document.body.style.overflow = 'hidden';
         // если клиент открыл модальное окно сам то мы очищаем интерва
@@ -153,21 +153,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     function closeModal() {
-        // modal.classList.add('hide');
-        // modal.classList.remove('show');
+        modal.classList.add('hide');
+        modal.classList.remove('show');
         // Закрытие модального окна через toggle
-        modal.classList.toggle('show');
+        // modal.classList.toggle('show');
 
         // восстанавливаем скрол после закрытия модального окна
         document.body.style.overflow = '';
     }
     // closeModal не вызываем а просто передаем!
-    modalCloseBtn.addEventListener('click', closeModal);
+    // modalCloseBtn.addEventListener('click', closeModal);
 
     // закрытие модального окна при клике на overflow
     modal.addEventListener('click', (e) => {
         // грубо говоря если клик будет по обьекту модал то закроем модалььное окно
-        if (e.target === modal) {
+        if (e.target === modal || e.target.getAttribute('data-close') == '') {
             closeModal();
         }
     });
@@ -181,7 +181,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // запуск модального окна по истечении времени
-    const modalTimerId = setTimeout(openModal, 5000);
+    const modalTimerId = setTimeout(openModal, 500000);
 
     // функция показа модального окна во время скрола
     function showModalByScroll() {
@@ -245,7 +245,7 @@ window.addEventListener('DOMContentLoaded', () => {
             // помещение элемента на страницу
             this.parent.append(element);
 
-        }   
+        }
     }
 
     // создаем нвоый обьект
@@ -275,4 +275,102 @@ window.addEventListener('DOMContentLoaded', () => {
         19,
         '.menu__field .container'
     ).render();
+
+    // Forms
+
+    // получение все форм
+    const forms = document.querySelectorAll('form');
+    // Обьект с сообщениями котоыре мы будем показывать в различных ситуация
+    const message = {
+        loading: 'img/form/spinner.svg',
+        success: 'Спасибо! Скоро мы с вами свяжемся',
+        failure: 'Что-то пошло не так...'
+    };
+
+    // подвязываем под все функции нашу функцию postData
+    forms.forEach(item => {
+        item.addEventListener('submit', (e) => {
+            e.preventDefault();
+            postData(item);
+        });
+    });
+
+    // функция которая будет отвечать за постинг данных
+    function postData(form) {
+        // Собщание которое будет появляться в диве после отправки фомры
+        const statusMessage = document.createElement('img');
+        statusMessage.src = message.loading;
+        statusMessage.style.cssText = `
+            display: block;
+            margin: 0 auto
+        `;
+        // отправка сообщения на страницу
+        // form.appendChild(statusMessage);
+        form.insertAdjacentElement('afterend', statusMessage);
+
+        const request = new XMLHttpRequest();
+        // вызываем метод open чтобы настроить этот запрос
+        request.open('POST', 'server.php');
+        // настройка заголовков, которые будут говорить что именно приходит  сервера
+        request.setRequestHeader('Content-type', 'application/json');
+        const formData = new FormData(form);
+
+        // переделка в формат json
+
+        const object = {};
+
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+
+        // конвертация в json
+        const json = JSON.stringify(object);
+
+
+        // отправка формы
+        request.send(json);
+
+        request.addEventListener('load', () => {
+            if (request.status === 200) {
+                console.log(request.response);
+                showThanksModal(message.success);
+                form.reset();
+                statusMessage.remove();
+            } else {
+                showThanksModal(message.failure);
+            }
+        });
+    }
+
+   
+
+
+    // Вид модальных окон отправки форм
+    function showThanksModal(message) {
+        const prevModalDialog = document.querySelector('.modal__dialog');
+        // скрываем контент предыдущий
+        prevModalDialog.classList.add('hide');
+        // открытие модально окна
+        openModal();
+        // создание нового контента 
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('modal__dialog');
+        // формирование той верстки которая будет в данном окне
+        thanksModal.innerHTML = `
+            <div class="modal__content">
+                <div data-close class="modal__close">×</div>
+                <div class="modal__title">${message}</div>
+            </div>
+        `;
+        // помещение модального окна на страницу
+        document.querySelector('.modal').append(thanksModal);
+        // openModal();
+        // настройка появление старого модального окна для повторной отправки формы
+        setTimeout(() => {
+            thanksModal.remove();
+            prevModalDialog.classList.add('show');
+            prevModalDialog.classList.remove('hide');
+            closeModal();
+        }, 4000);
+    }
 });
