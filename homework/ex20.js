@@ -17,32 +17,61 @@ const films = [{
     }
 ];
 
-// function showGoodFilms(arr) {
-//     const res = [];
-//     arr.forEach(element => {
-//         const newOb = Object.entries(element)
-//         .map(item => item[1])
-//         // .filter(item => item[1] >= 8)
-//         // .map(item => item[0])
-//         res.push(newOb)
-//     });
-//     const result = res.filter(item => item[1] >= 8)
-//     .map(item => item[0]);
-//     console.log(result);
-// }
+function showGoodFilms(arr) {
+    const res = [];
+    arr.forEach(element => {
+        const newOb = Object.entries(element)
+        .map(item => item[1])
+        res.push(newOb)
+    });
+    const result = res.filter(item => item[1] >= 8)
+    .map(item => item[0]);
+    console.log(result);
+}
 
-// showGoodFilms(films)
+showGoodFilms(films)
 
 //.ex20.2
-function setFilmsIds(arr) {
+function showListOfFilms(arr) {
     const listFilm = [];
     arr.forEach(element => {
         const film = Object.entries(element)
         .map(item => item[1])
         .filter(item => item[1]);
-        listFilm.push(film)
+        listFilm.push(film);
     });
     return listFilm.join(', ');
     // console.log(str);
 }
-console.log(setFilmsIds(films));
+console.log(showListOfFilms(films));
+
+//.ex20.3
+
+function setFilmsIds(arr) {
+    return arr.map((film, i) => {
+        film.id = i;
+        return film;
+    });
+}
+
+setFilmsIds(films);
+console.log(films);
+
+//.ex20.4
+function setFilmsIds(arr) {
+    return arr.map((film, i) => {
+        film.id = i;
+        return film;
+    });
+}
+
+
+const tranformedArray = setFilmsIds(films);
+
+function checkFilms(arr) {
+    return arr.every(film => film.id || film.id === 0 ? true : false)
+}
+
+
+
+

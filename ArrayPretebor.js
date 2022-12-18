@@ -64,7 +64,7 @@ const obj = {
 // используем метод entris и превращаем обьект в матрицу массивов
 
 const newArr = Object.entries(obj)
-.filter(item => item[1] === 'persone')
-.map(item => item[0]);
+// .filter(item => item[1] === 'persone')
+// .map(item => item[0]);
 
 console.log(newArr);
