@@ -9,6 +9,7 @@ const funds = [
     {amount: -11400}
 ];
 
+//ex.21.1
 function getPositiveIncomeAmount(arr) {
     const listFilm = [];
     const aR = [];
@@ -27,6 +28,27 @@ function getPositiveIncomeAmount(arr) {
     }
     const res = aR.reduce((sum, current) => sum + current);
     return res;
+};
+
+
+// console.log(getPositiveIncomeAmount(funds));
+
+//ex. 20.2
+
+function getPositiveIncomeAmount(arr) {
+    const wq = [];
+    // const aR = [];
+    arr.forEach(element => {
+        const ew = Object.entries(element)
+        .map(item => item[1])
+        return wq.push(...ew);
+
+    });
+    const even = (element) => element <= 0;
+    if (wq.some(even) === true) {
+        const ress = wq.reduce((sum, current) => sum + current);
+        return ress;
+    }
 };
 
 
