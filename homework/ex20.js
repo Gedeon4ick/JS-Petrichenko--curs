@@ -1,3 +1,4 @@
+// ex20.1
 const films = [{
         name: 'Titanic',
         rating: 9
@@ -16,18 +17,32 @@ const films = [{
     }
 ];
 
-function showGoodFilms(arr) {
-    const res = []
-    arr.forEach(element => {
-        const newOb = Object.entries(element)
-        .map(item => item[1])
-        // .filter(item => item[1] >= 8)
-        // .map(item => item[0])
-        res.push(newOb)
-    });
-    const result = res.filter(item => item[1] >= 8)
-    .map(item => item[0]);
-    console.log(result);
-}
+// function showGoodFilms(arr) {
+//     const res = [];
+//     arr.forEach(element => {
+//         const newOb = Object.entries(element)
+//         .map(item => item[1])
+//         // .filter(item => item[1] >= 8)
+//         // .map(item => item[0])
+//         res.push(newOb)
+//     });
+//     const result = res.filter(item => item[1] >= 8)
+//     .map(item => item[0]);
+//     console.log(result);
+// }
 
-showGoodFilms(films)
+// showGoodFilms(films)
+
+//.ex20.2
+function setFilmsIds(arr) {
+    const listFilm = [];
+    arr.forEach(element => {
+        const film = Object.entries(element)
+        .map(item => item[1])
+        .filter(item => item[1]);
+        listFilm.push(film)
+    });
+    return listFilm.join(', ');
+    // console.log(str);
+}
+console.log(setFilmsIds(films));
